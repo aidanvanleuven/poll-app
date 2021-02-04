@@ -4,9 +4,20 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var debug = require('debug')('poll-app:server');
+var session = require('express-session');
+var mysql = require('mysql2/promise');
+var config = require("./db_config.js");
+const pool = mysql.createPool(config.connection);
+var MySQLStore = require('express-mysql-session')(session);
+
+var options = {
+
+};
+
+var sessionStore = new MySQLStore(options, pool);
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var pollRouter = require('./routes/poll');
 
 var app = express();
 
@@ -16,12 +27,23 @@ app.set('view engine', 'ejs');
 
 app.use(logger('dev', { stream: { write: msg => debug(msg) } }));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session({
+  key: 'session_cookie_name',
+  cookie: {
+    sameSite: true
+  },
+	secret: 'session_cookie_secret',
+	store: sessionStore,
+	resave: false,
+	saveUninitialized: false
+}));
+
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/poll', pollRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

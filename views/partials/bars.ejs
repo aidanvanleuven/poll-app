@@ -1,0 +1,16 @@
+<% Answers.forEach(function(element){ %>
+  <% var pct = (element.Votes / Total) * 100 %> 
+  <div class="mb-3">
+    <p><%= element.AnswerText %></p>
+    <div class="progress mb-3" style="height:30px">
+      <div class="progress-bar" style="width:<%= Voted ? pct + '%' : 0 + '%' %>" role="progressbar" data-id="<%= element.AnswerID %>">
+        <% if(Voted){ %>
+          <%= element.Votes + ' votes' %> 
+        <% } %>
+      </div>
+    </div>
+    <div class="text-end mb-3">
+      <a class="btn btn-primary vote <%= (Voted)?'disabled':'' %>" data-id="<%= QuestionID %>" id="<%= element.AnswerID %>">Vote</a>
+    </div>
+  </div>
+<% }); %>  

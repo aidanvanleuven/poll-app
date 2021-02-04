@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "build": "npm install --loglevel=error",
-    "build-prod": "npm install --production --loglevel=error",
+    "build-prod": "npm install --loglevel=error",
     "dev": "DEBUG=poll-app:* nodemon ./bin/www",
     "test": "mocha --exit"
   },
@@ -15,12 +15,17 @@
     "dotenv": "^8.2.0",
     "ejs": "~2.6.1",
     "express": "~4.16.1",
+    "express-mysql-session": "^2.1.5",
+    "express-session": "^1.17.1",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
-    "mysql2": "^2.2.5"
+    "mysql2": "^2.2.5",
+    "nanoid": "^3.1.20",
+    "socket.io": "^3.1.1"
   },
   "devDependencies": {
     "mocha": "^8.2.1",
+    "mocha-jshint": "^2.3.1",
     "nodemon": "^2.0.7",
     "should": "^13.2.3",
     "supertest": "^6.1.3"
