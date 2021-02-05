@@ -4,7 +4,7 @@
     <p><%= element.AnswerText %></p>
     <div class="progress mb-3" style="height:30px">
       <div class="progress-bar" style="width:<%= Voted ? pct + '%' : 0 + '%' %>" role="progressbar" data-id="<%= element.AnswerID %>">
-        <% if(Voted){ %>
+        <% if(Voted && element.Votes != 0){ %>
           <%= element.Votes + ' votes' %> 
         <% } %>
       </div>
