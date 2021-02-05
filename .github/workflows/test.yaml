@@ -1,0 +1,36 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Mocha Tests
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    env:
+      DB_DATABASE: poll
+      DB_USER: root
+      DB_PASSWORD: root
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js 14.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 14.x
+
+    - name: Set up MySQL database
+      run: |
+        sudo /etc/init.d/mysql start
+        mysql --host 127.0.0.1 -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }} < etc/startup.sql
+        mysql --host 127.0.0.1 -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }} -e "SHOW DATABASES"
+
+    - name: Run tests
+      run: |
+        npm ci
+        DB_USER=${{ env.DB_USER }} DB_PASS=${{ env.DB_PASSWORD }} PORT=3000 SECRET=somesecret npm test

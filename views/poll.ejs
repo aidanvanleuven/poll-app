@@ -17,6 +17,7 @@
       <p id="total-votes">Total Votes: <%= (Voted) ? Total : '~' %> </p>
       <p id="error-text" class="text-danger"></p>
 
+      <p class="<%= (Voted)?'d-none':'' %>" id="warning-text">Note: Viewing the result will prevent you from voting!</p>
       <a id="view-results" class="btn btn-primary <%= (Voted)?'disabled':'' %>" data-id="<%= QuestionID %>">View results</a>
     </div>
 

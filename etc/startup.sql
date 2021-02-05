@@ -8,5 +8,9 @@ CREATE TABLE IF NOT EXISTS questions(
 
 CREATE TABLE IF NOT EXISTS answers(
 	AnswerID VARCHAR(30) PRIMARY KEY,
-  AnswerText VARCHAR(500) NOT NULL
+  AnswerText VARCHAR(500) NOT NULL,
+  QuestionID VARCHAR(30) NOT NULL,
+  Votes INT NOT NULL
+  FOREIGN KEY (QuestionID)
+    REFERENCES questions(QuestionID)
 );

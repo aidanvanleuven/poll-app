@@ -23,7 +23,7 @@ $(function () {
     };
   
     $.post("/poll/vote", data, function (res) {
-
+      afterVoting(res);
     });
   });
 
@@ -51,6 +51,7 @@ function afterVoting(res) {
 
   $(".vote").addClass("disabled");
   $("#view-results").addClass("disabled");
+  $("#warning-text").addClass("d-none");
 
   if (res.voted) {
     $("#error-text").text("You've already voted!");
