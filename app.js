@@ -10,6 +10,12 @@ var config = require("./db_config.js");
 const pool = mysql.createPool(config.connection);
 var MySQLStore = require('express-mysql-session')(session);
 
+if (process.env.NODE_ENV !== 'production') {
+  require("dotenv").config();  
+}
+
+var secret = process.env.SECRET;
+
 var options = {
 
 };
@@ -36,7 +42,7 @@ app.use(session({
   cookie: {
     sameSite: true
   },
-	secret: 'session_cookie_secret',
+	secret: secret,
 	store: sessionStore,
 	resave: false,
 	saveUninitialized: false
